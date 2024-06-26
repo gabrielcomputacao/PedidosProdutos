@@ -9,6 +9,15 @@ export interface IItemPedido {
   amount: string;
   price: string;
 }
+export interface IItemPedidoFinal {
+  ID_PRODUTO: number;
+  QUANTIDADE: number;
+}
+export interface IPedidoFinal {
+  id_cli: string;
+  preco_pedido: number;
+  itens: IItemPedidoFinal[];
+}
 
 export const itensProdutos = [
   {

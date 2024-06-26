@@ -13,14 +13,30 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { IItemPedido, IItensProdutos, itensProdutos } from "../../mock";
-import { useState } from "react";
+import {
+  IItemPedido,
+  IItemPedidoFinal,
+  IItensProdutos,
+  IPedidoFinal,
+  itensProdutos,
+} from "../../mock";
+import { useEffect, useState } from "react";
 
 export function Container() {
   const [isModal, setIsModal] = useState(false);
+  const [idClient, setIdClient] = useState(1);
   const [selectedItem, setSelectedItem] = useState({} as IItensProdutos);
   const [orderItem, setOrderItem] = useState({} as IItemPedido);
+  const [itemPedidoFinal, setItemPedidoFinal] = useState({
+    id_cli: String(idClient),
+    preco_pedido: 0,
+    itens: [] as IItemPedidoFinal[],
+  } as IPedidoFinal);
   const [listOrderItem, setListOrderItem] = useState([] as IItemPedido[]);
+  const [messageError, setMessageError] = useState({
+    error: false,
+    helperText: "",
+  });
 
   function handleIsModal() {
     setIsModal((prev) => !prev);
@@ -38,28 +54,66 @@ export function Container() {
   }
 
   function addItemInListOrder() {
-    setListOrderItem((prev) => {
-      const hasObjectInList = prev.find((obj) => obj.name === orderItem.name);
+    if (Number(orderItem.amount) <= 0) {
+      setMessageError({
+        error: true,
+        helperText: "Precisa ser maior que zero.",
+      });
+    } else {
+      setMessageError({
+        error: false,
+        helperText: "",
+      });
 
-      if (hasObjectInList) {
-        return prev.map((obj) =>
-          obj.name === orderItem.name
-            ? {
-                ...obj,
-                amount: String(Number(obj.amount) + Number(orderItem.amount)),
-                price: String(
-                  (Number(obj.amount) + Number(orderItem.amount)) *
-                    Number(orderItem.price)
-                ),
-              }
-            : obj
-        );
-      } else {
-        return [...prev, orderItem];
-      }
-    });
-    setSelectedItem({} as IItensProdutos);
-    setOrderItem({} as IItemPedido);
+      setListOrderItem((prev) => {
+        const hasObjectInList = prev.find((obj) => obj.name === orderItem.name);
+
+        if (hasObjectInList) {
+          return prev.map((obj) =>
+            obj.name === orderItem.name
+              ? {
+                  ...obj,
+                  amount: String(Number(obj.amount) + Number(orderItem.amount)),
+                  price: String(
+                    (
+                      (Number(obj.amount) + Number(orderItem.amount)) *
+                      Number(orderItem.price)
+                    ).toFixed(3)
+                  ),
+                }
+              : obj
+          );
+        } else {
+          return [
+            ...prev,
+            {
+              ...orderItem,
+              price: String(
+                (Number(orderItem.amount) * Number(orderItem.price)).toFixed(3)
+              ),
+            },
+          ];
+        }
+      });
+      setSelectedItem({} as IItensProdutos);
+      setOrderItem({} as IItemPedido);
+
+      handleIsModal();
+    }
+  }
+
+  function handleOnClickFinishOrder() {
+    console.log(itemPedidoFinal);
+
+    setIdClient((prev) => prev + 1);
+
+    setItemPedidoFinal({
+      id_cli: String(idClient + 1),
+      preco_pedido: 0,
+      itens: [] as IItemPedidoFinal[],
+    } as IPedidoFinal);
+
+    setListOrderItem([] as IItemPedido[]);
   }
 
   const style = {
@@ -73,6 +127,27 @@ export function Container() {
     boxShadow: 24,
     p: 4,
   };
+
+  useEffect(() => {
+    if (listOrderItem.length > 0) {
+      setItemPedidoFinal((prev) => {
+        return {
+          ...prev,
+          preco_pedido: listOrderItem.reduce((total, item) => {
+            const price = Number(item.price);
+
+            return total + price;
+          }, 0),
+          itens: listOrderItem.map((itemProd, index) => {
+            return {
+              ID_PRODUTO: idClient + index,
+              QUANTIDADE: Number(itemProd.amount),
+            };
+          }),
+        };
+      });
+    }
+  }, [listOrderItem, idClient]);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -145,7 +220,9 @@ export function Container() {
                 <TextField
                   onChange={(e) => handleOnChangeOrderItem(e)}
                   type="number"
-                  sx={{ width: "100px" }}
+                  sx={{ width: "200px" }}
+                  error={messageError.error}
+                  helperText={messageError.helperText}
                 />
               </Box>
               <Box display={"flex"} justifyContent={"center"}>
@@ -153,7 +230,6 @@ export function Container() {
                   variant="contained"
                   onClick={() => {
                     addItemInListOrder();
-                    handleIsModal();
                   }}
                 >
                   Incluir no pedido
@@ -173,7 +249,7 @@ export function Container() {
             gap={"10px"}
           >
             <Typography variant="h6" component="h2">
-              Pedido: 321434
+              Pedido: {idClient + 200}
             </Typography>
             <Typography variant="h6" component="h2">
               Cliente: Casas Ferramentas
@@ -234,9 +310,20 @@ export function Container() {
                 );
               })}
 
+              <Box width={"70%"} marginTop={"20px"}>
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  sx={{ textAlign: "right" }}
+                >
+                  Total: {itemPedidoFinal.preco_pedido.toFixed(3)}
+                </Typography>
+              </Box>
+
               <Button
                 variant="contained"
                 sx={{ width: "90%", marginTop: "40px" }}
+                onClick={handleOnClickFinishOrder}
               >
                 Realizar Pedido
               </Button>
