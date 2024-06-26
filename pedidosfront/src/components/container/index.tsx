@@ -21,6 +21,7 @@ import {
   itensProdutos,
 } from "../../mock";
 import { useEffect, useState } from "react";
+import styles from "./container.module.css";
 
 export function Container() {
   const [isModal, setIsModal] = useState(false);
@@ -152,8 +153,8 @@ export function Container() {
   return (
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "60px" }}>Pedido</h1>
-      <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
-        <div style={{ width: "60%", height: "100%" }}>
+      <div className={styles.divContainer}>
+        <div className={styles.divTable}>
           <Box>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -239,7 +240,7 @@ export function Container() {
           </Modal>
         </div>
 
-        <div style={{ width: "40%" }}>
+        <div className={styles.divPedido}>
           <Box
             display={"flex"}
             flexDirection={"column"}

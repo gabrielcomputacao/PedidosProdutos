@@ -1,0 +1,30 @@
+.divContainer {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+
+}
+
+.divTable {
+    width: 60%;
+    height: 100%;
+}
+
+.divPedido {
+    width: 40%;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .divTable {
+        width: 100%;
+    }
+
+    .divPedido {
+        width: 100%;
+    }
+
+    .divContainer {
+        flex-direction: column;
+    }
+}
