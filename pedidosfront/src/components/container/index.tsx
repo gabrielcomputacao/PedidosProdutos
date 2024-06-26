@@ -156,6 +156,14 @@ export function Container() {
     }
   }, [listOrderItem, idClient]);
 
+  useEffect(() => {
+    fetch("http://localhost:9000/produtos/")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
+
   return (
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "60px" }}>Pedido</h1>
