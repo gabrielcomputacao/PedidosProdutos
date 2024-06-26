@@ -55,10 +55,16 @@ export function Container() {
   }
 
   function addItemInListOrder() {
-    if (Number(orderItem.amount) <= 0) {
+    if (
+      Number(orderItem.amount) <= 0 ||
+      Number(orderItem.amount) > Number(selectedItem.QTDESTOQUE)
+    ) {
       setMessageError({
         error: true,
-        helperText: "Precisa ser maior que zero.",
+        helperText:
+          Number(orderItem.amount) <= 0
+            ? "Precisa ser maior que zero"
+            : "Quantidade indisponível no estoque.",
       });
     } else {
       setMessageError({
