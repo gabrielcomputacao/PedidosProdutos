@@ -18,7 +18,6 @@ import {
   IItemPedidoFinal,
   IItensProdutos,
   IPedidoFinal,
-  itensProdutos,
 } from "../../mock";
 import { useEffect, useState } from "react";
 import styles from "./container.module.css";
@@ -28,6 +27,7 @@ export function Container() {
   const [idClient, setIdClient] = useState(1);
   const [selectedItem, setSelectedItem] = useState({} as IItensProdutos);
   const [orderItem, setOrderItem] = useState({} as IItemPedido);
+  const [itensProdutos, setItensProdutos] = useState([] as IItensProdutos[]);
   const [itemPedidoFinal, setItemPedidoFinal] = useState({
     id_cli: String(idClient),
     preco_pedido: 0,
@@ -160,7 +160,7 @@ export function Container() {
     fetch("http://localhost:9000/produtos/")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setItensProdutos(data);
       });
   }, []);
 
