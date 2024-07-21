@@ -153,14 +153,18 @@ export function Container() {
       setItemPedidoFinal((prev) => {
         return {
           ...prev,
-          preco_pedido: listOrderItem.reduce((total, item) => {
+          PRECO_PEDIDO: listOrderItem.reduce((total, item) => {
             const price = Number(item.price);
 
             return total + price;
           }, 0),
-          itens: listOrderItem.map((itemProd, index) => {
+          itens: listOrderItem.map((itemProd) => {
+            const idProdutoResults = itensProdutos.find(
+              (prod) => prod.DESCRICAO === itemProd.name
+            );
+
             return {
-              ID_PRODUTO: idClient + index,
+              ID_PRODUTO: idProdutoResults ? Number(idProdutoResults.ID) : 0,
               QUANTIDADE: Number(itemProd.amount),
             };
           }),
