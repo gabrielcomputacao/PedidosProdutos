@@ -112,7 +112,7 @@ export function Container() {
   function handleOnClickFinishOrder() {
     console.log(itemPedidoFinal);
 
-    fetch("http://localhost:9000/produtos/", {
+    fetch("http://localhost:9000/pedido", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
