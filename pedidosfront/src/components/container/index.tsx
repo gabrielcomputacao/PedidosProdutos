@@ -179,7 +179,7 @@ export function Container() {
       .then((data) => {
         setItensProdutos(data);
       });
-  }, []);
+  }, [idClient]);
 
   return (
     <div style={{ padding: "20px" }}>
