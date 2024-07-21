@@ -124,18 +124,17 @@ export function Container() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        setIdClient((prev) => prev + 1);
+
+        setItemPedidoFinal({
+          ID_CLI: idClient + 1,
+          PRECO_PEDIDO: 0,
+          itens: [] as IItemPedidoFinal[],
+        } as IPedidoFinal);
+
+        setListOrderItem([] as IItemPedido[]);
       })
       .catch((error) => console.log(error));
-
-    setIdClient((prev) => prev + 1);
-
-    setItemPedidoFinal({
-      ID_CLI: idClient + 1,
-      PRECO_PEDIDO: 0,
-      itens: [] as IItemPedidoFinal[],
-    } as IPedidoFinal);
-
-    setListOrderItem([] as IItemPedido[]);
   }
 
   const style = {
