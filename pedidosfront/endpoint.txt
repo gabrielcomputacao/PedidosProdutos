@@ -3,4 +3,7 @@
 produtos =  http://localhost:9000/produtos/
 
 
+pedido = http://localhost:9000/pedido
+
+
 

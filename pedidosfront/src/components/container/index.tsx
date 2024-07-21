@@ -112,6 +112,19 @@ export function Container() {
   function handleOnClickFinishOrder() {
     console.log(itemPedidoFinal);
 
+    fetch("http://localhost:9000/produtos/", {
+      method: "POST", // Método HTTP
+      headers: {
+        "Content-Type": "application/json", // Tipo de conteúdo
+      },
+      body: JSON.stringify(itemPedidoFinal),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+
     setIdClient((prev) => prev + 1);
 
     setItemPedidoFinal({
