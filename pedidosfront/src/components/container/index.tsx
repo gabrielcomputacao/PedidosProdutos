@@ -121,9 +121,8 @@ export function Container() {
       },
       body: JSON.stringify(itemPedidoFinal),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then((response) => {
+        console.log(response);
         setIdClient((prev) => prev + 1);
 
         setItemPedidoFinal({
