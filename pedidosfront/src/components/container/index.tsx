@@ -25,6 +25,8 @@ import styles from "./container.module.css";
 export function Container() {
   const [isModal, setIsModal] = useState(false);
   const [idClient, setIdClient] = useState(1);
+  const [idPedido, setIdPedido] = useState(0);
+
   const [selectedItem, setSelectedItem] = useState({} as IItensProdutos);
   const [orderItem, setOrderItem] = useState({} as IItemPedido);
   const [itensProdutos, setItensProdutos] = useState([] as IItensProdutos[]);
@@ -181,6 +183,14 @@ export function Container() {
       });
   }, [idClient]);
 
+  useEffect(() => {
+    fetch("http://localhost:9000/pedido/")
+      .then((response) => response.json())
+      .then((data) => {
+        setIdPedido(data.length);
+      });
+  }, [idPedido]);
+
   return (
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "60px" }}>Pedido</h1>
@@ -281,7 +291,7 @@ export function Container() {
             gap={"10px"}
           >
             <Typography variant="h6" component="h2">
-              Pedido: {idClient + 200}
+              Pedido: {idPedido + 1}
             </Typography>
             <Typography variant="h6" component="h2">
               Cliente: Casas Ferramentas
