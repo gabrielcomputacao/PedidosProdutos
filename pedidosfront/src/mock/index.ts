@@ -14,8 +14,8 @@ export interface IItemPedidoFinal {
   QUANTIDADE: number;
 }
 export interface IPedidoFinal {
-  id_cli: number;
-  preco_pedido: number;
+  ID_CLI: number;
+  PRECO_PEDIDO: number;
   itens: IItemPedidoFinal[];
 }
 

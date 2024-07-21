@@ -29,8 +29,8 @@ export function Container() {
   const [orderItem, setOrderItem] = useState({} as IItemPedido);
   const [itensProdutos, setItensProdutos] = useState([] as IItensProdutos[]);
   const [itemPedidoFinal, setItemPedidoFinal] = useState({
-    id_cli: idClient,
-    preco_pedido: 0,
+    ID_CLI: idClient,
+    PRECO_PEDIDO: 0,
     itens: [] as IItemPedidoFinal[],
   } as IPedidoFinal);
   const [listOrderItem, setListOrderItem] = useState([] as IItemPedido[]);
@@ -113,9 +113,9 @@ export function Container() {
     console.log(itemPedidoFinal);
 
     fetch("http://localhost:9000/produtos/", {
-      method: "POST", // Método HTTP
+      method: "POST",
       headers: {
-        "Content-Type": "application/json", // Tipo de conteúdo
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(itemPedidoFinal),
     })
@@ -128,8 +128,8 @@ export function Container() {
     setIdClient((prev) => prev + 1);
 
     setItemPedidoFinal({
-      id_cli: idClient + 1,
-      preco_pedido: 0,
+      ID_CLI: idClient + 1,
+      PRECO_PEDIDO: 0,
       itens: [] as IItemPedidoFinal[],
     } as IPedidoFinal);
 
@@ -344,7 +344,7 @@ export function Container() {
                   component="h2"
                   sx={{ textAlign: "right" }}
                 >
-                  Total: {itemPedidoFinal.preco_pedido.toFixed(3)}
+                  Total: {itemPedidoFinal.PRECO_PEDIDO.toFixed(3)}
                 </Typography>
               </Box>
 
