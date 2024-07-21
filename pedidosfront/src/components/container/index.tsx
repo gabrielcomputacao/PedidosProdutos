@@ -187,7 +187,7 @@ export function Container() {
       .then((data) => {
         setIdPedido(data.length);
       });
-  }, [idPedido]);
+  }, [idPedido, idClient]);
 
   return (
     <div style={{ padding: "20px" }}>
