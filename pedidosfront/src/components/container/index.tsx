@@ -29,7 +29,7 @@ export function Container() {
   const [orderItem, setOrderItem] = useState({} as IItemPedido);
   const [itensProdutos, setItensProdutos] = useState([] as IItensProdutos[]);
   const [itemPedidoFinal, setItemPedidoFinal] = useState({
-    id_cli: String(idClient),
+    id_cli: idClient,
     preco_pedido: 0,
     itens: [] as IItemPedidoFinal[],
   } as IPedidoFinal);
@@ -128,7 +128,7 @@ export function Container() {
     setIdClient((prev) => prev + 1);
 
     setItemPedidoFinal({
-      id_cli: String(idClient + 1),
+      id_cli: idClient + 1,
       preco_pedido: 0,
       itens: [] as IItemPedidoFinal[],
     } as IPedidoFinal);
