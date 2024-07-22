@@ -183,11 +183,16 @@ export function Container() {
       .then((data) => {
         setItensProdutos(data);
       });
-    fetch("http://localhost:9000/pedido/")
-      .then((response) => response.json())
-      .then((data) => {
-        setIdPedido(data.length);
-      });
+  }, [idClient]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch("http://localhost:9000/pedido/")
+        .then((response) => response.json())
+        .then((data) => {
+          setIdPedido(data.length);
+        });
+    }, 1000);
   }, [idClient]);
 
   return (
@@ -290,6 +295,7 @@ export function Container() {
                   variant="contained"
                   onClick={() => {
                     setIdClient((prev) => prev + 1);
+
                     handleIsModalConclusion();
                   }}
                 >
