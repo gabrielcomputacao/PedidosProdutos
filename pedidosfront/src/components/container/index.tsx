@@ -179,15 +179,12 @@ export function Container() {
       .then((data) => {
         setItensProdutos(data);
       });
-  }, [idClient]);
-
-  useEffect(() => {
     fetch("http://localhost:9000/pedido/")
       .then((response) => response.json())
       .then((data) => {
         setIdPedido(data.length);
       });
-  }, [idPedido, idClient]);
+  }, [idClient]);
 
   return (
     <div style={{ padding: "20px" }}>
