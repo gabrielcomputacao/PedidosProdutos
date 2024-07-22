@@ -24,6 +24,7 @@ import styles from "./container.module.css";
 
 export function Container() {
   const [isModal, setIsModal] = useState(false);
+  const [isModalConclusion, setIsModalConclusion] = useState(false);
   const [idClient, setIdClient] = useState(1);
   const [idPedido, setIdPedido] = useState(0);
 
@@ -43,6 +44,9 @@ export function Container() {
 
   function handleIsModal() {
     setIsModal((prev) => !prev);
+  }
+  function handleIsModalConclusion() {
+    setIsModalConclusion((prev) => !prev);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -123,7 +127,7 @@ export function Container() {
     })
       .then((response) => {
         console.log(response);
-        setIdClient((prev) => prev + 1);
+        setIsModalConclusion(true);
 
         setItemPedidoFinal({
           ID_CLI: idClient + 1,
@@ -270,6 +274,26 @@ export function Container() {
                   }}
                 >
                   Incluir no pedido
+                </Button>
+              </Box>
+            </Box>
+          </Modal>
+          <Modal
+            open={isModalConclusion}
+            onClose={handleIsModalConclusion}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Box display={"flex"} justifyContent={"center"}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setIdClient((prev) => prev + 1);
+                    handleIsModalConclusion();
+                  }}
+                >
+                  Pedido Realizado com Sucesso!
                 </Button>
               </Box>
             </Box>
